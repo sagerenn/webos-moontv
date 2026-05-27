@@ -58,6 +58,12 @@ async function assertHostedSmoke() {
   });
 }
 
+async function assertLauncherSmoke() {
+  await execFileAsync('node', ['scripts/smoke-launcher.mjs'], {
+    cwd: rootDir
+  });
+}
+
 async function maybeVerifyPackagedLauncherConfig() {
   const ipkFiles = (await fs.readdir(rootDir)).filter((file) => file.endsWith('.ipk'));
   if (!ipkFiles.length) {
@@ -130,6 +136,7 @@ async function main() {
   await assertParses('launcher/launcher.js');
   await assertBuildOutput();
   await assertHostedSmoke();
+  await assertLauncherSmoke();
   await maybeVerifyPackagedLauncherConfig();
 
   console.log('Verification complete.');

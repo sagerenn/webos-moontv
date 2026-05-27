@@ -146,9 +146,18 @@ This repo currently verifies:
 - launcher manifest shape
 - JavaScript syntax
 - distribution build output
+- hosted frontend smoke flow
+- launcher smoke flow
 
 Run:
 
 ```bash
 npm run verify
 ```
+
+## GitHub Actions
+
+- Pull requests and pushes run syntax checks, package the webOS app, and run verification.
+- Pushing a `v*` tag creates a GitHub release and attaches the built `.ipk` package.
+- Release tags are validated against both `package.json` and `launcher/appinfo.json` versions.
+- Set the repository variable `WEBOS_APP_URL` if release builds should auto-launch a hosted TV frontend by default.

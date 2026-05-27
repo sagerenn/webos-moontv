@@ -1,0 +1,93 @@
+name: CI and Release
+
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-test-package:
+    runs-on: ubuntu-latest
+    env:
+      WEBOS_APP_URL: ${{ vars.WEBOS_APP_URL }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check release tag version
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+        run: |
+          set -euo pipefail
+          package_version="$(node -p "require('./package.json').version")"
+          launcher_version="$(node -p "require('./launcher/appinfo.json').version")"
+          expected_tag="v${launcher_version}"
+
+          if [ "${package_version}" != "${launcher_version}" ]; then
+            echo "package.json version ${package_version} does not match launcher/appinfo.json version ${launcher_version}." >&2
+            exit 1
+          fi
+
+          if [ "${GITHUB_REF_NAME}" != "${expected_tag}" ]; then
+            echo "Release tag ${GITHUB_REF_NAME} does not match expected tag ${expected_tag}." >&2
+            exit 1
+          fi
+
+      - name: Check JavaScript syntax
+        run: npm run check:js
+
+      - name: Build webOS package
+        run: npm run package:webos
+
+      - name: Verify repository outputs
+        run: npm run verify
+
+      - name: Collect release artifacts
+        if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v'))
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts
+          cp ./*.ipk artifacts/
+
+      - name: Upload release artifacts
+        if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v'))
+        uses: actions/upload-artifact@v4
+        with:
+          name: webos-package
+          path: artifacts/*.ipk
+          if-no-files-found: error
+          retention-days: 7
+
+  release:
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    needs: build-test-package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download packaged artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: webos-package
+          path: artifacts
+
+      - name: Publish GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: MoonTVPlus webOS ${{ github.ref_name }}
+          generate_release_notes: true
+          files: artifacts/*.ipk
+          fail_on_unmatched_files: true
