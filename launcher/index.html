@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MoonTVPlus TV Launcher</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="launcher-shell">
+      <section class="launcher-card">
+        <p class="eyebrow">webOS 4 Launcher</p>
+        <h1>MoonTVPlus TV</h1>
+        <p class="lead">
+          This launcher opens the hosted MoonTVPlus TV frontend from your server.
+        </p>
+
+        <label class="field">
+          <span>Hosted frontend URL</span>
+          <input
+            id="launcher-url"
+            type="url"
+            placeholder="https://moontv.example.com/tv/index.html"
+            autocomplete="url"
+          />
+        </label>
+
+        <div class="button-row">
+          <button id="launch-button" class="primary-button" type="button">
+            Launch
+          </button>
+          <button id="save-button" class="ghost-button" type="button">
+            Save
+          </button>
+        </div>
+
+        <p id="launcher-status" class="status-line">
+          Enter the hosted TV frontend URL, then launch.
+        </p>
+      </section>
+    </main>
+
+    <script src="./launcher.js"></script>
+  </body>
+</html>

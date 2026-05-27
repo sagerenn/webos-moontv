@@ -1,0 +1,12 @@
+{
+  "id": "com.moontvplus.webos4",
+  "version": "0.1.0",
+  "vendor": "MoonTVPlus Community",
+  "type": "web",
+  "main": "index.html",
+  "title": "MoonTVPlus TV",
+  "icon": "icon.png",
+  "largeIcon": "largeIcon.png",
+  "disableBackHistoryAPI": true,
+  "uiRevision": 2
+}

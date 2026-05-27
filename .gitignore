@@ -82,6 +82,7 @@ out
 .nuxt
 dist
 .output
+*.ipk
 
 # Gatsby files
 .cache/

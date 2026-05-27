@@ -1,0 +1,25 @@
+{
+  "name": "webos-moontv-tv",
+  "version": "0.1.0",
+  "private": true,
+  "description": "LG webOS 4 TV frontend and launcher for MoonTVPlus",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "verify": "node scripts/verify.mjs",
+    "smoke:hosted": "node scripts/smoke-hosted.mjs",
+    "smoke:launcher": "node scripts/smoke-launcher.mjs",
+    "check:js": "node --check hosted/app.js && node --check launcher/launcher.js",
+    "deploy:moontvplus": "node scripts/install-into-moontvplus.mjs",
+    "package:webos": "node scripts/package-webos.mjs",
+    "validate:deploy": "node scripts/validate-deploy.mjs",
+    "install:webos": "node scripts/install-webos.mjs",
+    "launch:webos": "node scripts/launch-webos.mjs"
+  },
+  "devDependencies": {
+    "@webos-tools/cli": "^3.2.3",
+    "jsdom": "^26.1.0"
+  },
+  "dependencies": {
+    "hls.js": "^1.6.16"
+  }
+}

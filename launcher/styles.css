@@ -1,0 +1,120 @@
+:root {
+  color-scheme: dark;
+  --bg: #07111e;
+  --panel: rgba(14, 26, 46, 0.92);
+  --line: rgba(255, 255, 255, 0.08);
+  --text: #f3f8ff;
+  --muted: #9aaac0;
+  --accent: #8fe0ff;
+  --focus: #ffd166;
+  font-family: "Segoe UI", "Noto Sans", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background:
+    radial-gradient(circle at top right, rgba(143, 224, 255, 0.24), transparent 28%),
+    linear-gradient(180deg, #08131f 0%, #050b13 100%);
+  color: var(--text);
+}
+
+body {
+  min-width: 1280px;
+}
+
+.launcher-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+}
+
+.launcher-card {
+  width: 100%;
+  max-width: 760px;
+  border-radius: 28px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 36px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.42);
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: var(--accent);
+}
+
+h1 {
+  margin: 0 0 14px;
+  font-size: 54px;
+  line-height: 1.05;
+}
+
+.lead,
+.status-line,
+.field span {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 26px 0 22px;
+}
+
+.field input {
+  width: 100%;
+  min-height: 62px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  padding: 0 18px;
+  font: inherit;
+}
+
+.field input:focus,
+.primary-button:focus,
+.ghost-button:focus {
+  outline: none;
+  border-color: var(--focus);
+  box-shadow: 0 0 0 3px rgba(255, 209, 102, 0.34);
+}
+
+.button-row {
+  display: flex;
+  gap: 14px;
+}
+
+.primary-button,
+.ghost-button {
+  min-height: 56px;
+  padding: 0 20px;
+  border-radius: 16px;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+.primary-button {
+  background: linear-gradient(135deg, #28aefe 0%, #9fe4ff 100%);
+  color: #07111e;
+  font-weight: 700;
+}
+
+.ghost-button {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
